@@ -1,9 +1,5 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class TodoHeader extends Component {
-  render() {
-    return <h1>Todo list</h1>;
-  }
-}
+const TodoHeader = () => <h1>Todo List</h1>;
 
 export default TodoHeader;
