@@ -1,19 +1,20 @@
 import React, { Component } from 'react';
 import moment from 'moment';
-import TodoHeader from './Components/TodoHeader/TodoHeader';
-import TodoList from './Components/TodoList/TodoList';
-import TodoForm from './Components/TodoForm/TodoForm';
-import Timer from './Components/Timer/Timer';
-import './Styles/App.css';
+import TodoHeader from '../TodoHeader/TodoHeader';
+import TodoList from '../TodoList/TodoList';
+import TodoForm from '../TodoForm/TodoForm';
+import Timer from '../Timer/Timer';
+import '../../Styles/App.css';
 
 class TodoApp extends Component {
   constructor(props) {
     super(props);
 
+    this.state = { todoItems: [], showTimer: false };
+
     this.addItem = this.addItem.bind(this);
     this.removeItem = this.removeItem.bind(this);
     this.markTodoDone = this.markTodoDone.bind(this);
-    this.state = { todoItems: [], showTimer: false };
   }
 
   addItem(todoItem) {
@@ -26,7 +27,7 @@ class TodoApp extends Component {
       done: false
     });
 
-    this.setState({ todoItems: todoItems });
+    this.setState({ todoItems });
   }
 
   removeItem(itemIndex) {
@@ -38,14 +39,14 @@ class TodoApp extends Component {
   }
 
   markTodoDone(itemIndex) {
-    const todoItems = this.state.todoItems;
+    const { todoItems } = this.state;
     let todo = todoItems[itemIndex];
 
     todoItems.splice(itemIndex, 1);
     todo.done = !todo.done;
     todo.done ? todoItems.push(todo) : todoItems.unshift(todo);
 
-    this.setState({ todoItems: todoItems });
+    this.setState({ todoItems });
   }
 
   render() {
