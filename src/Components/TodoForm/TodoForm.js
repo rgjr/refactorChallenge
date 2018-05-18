@@ -5,57 +5,45 @@ class TodoForm extends Component {
     super(props);
 
     this.state = {
-      value: ''
+      newItemValue: ''
     };
 
-    this.itemName = null;
-
-    this.itemNameRef = e => {
-      this.itemName = e;
-    };
-
-    this.onSubmit = this.onSubmitForm.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
-  handleChange(event) {
-    let text = event.target.value;
-
-    this.setState({
-      value: text
-    });
-  }
-
-  onSubmitForm(event) {
-    console.log(event.target.value);
-
+  onSubmit(event) {
     event.preventDefault();
 
-    let newItemValue = event;
+    let newItemValue = this.state.newItemValue.trim();
 
     if (newItemValue) {
       this.props.addItem({ newItemValue });
 
-      //this.todoForm.reset();
+      this.setState({
+        newItemValue: ''
+      });
+
+      event.target.reset();
     }
+  }
+
+  handleChange(event) {
+    this.setState({
+      newItemValue: event.target.value
+    });
   }
 
   render() {
     return (
-      <form
-        ref={'todoForm'}
-        id="todoForm"
-        onSubmit={event => this.onSubmitForm(event)}
-        className="form-inline"
-      >
+      <form id="todoForm" onSubmit={this.onSubmit} className="form-inline">
         <input
           autoFocus
           type="text"
-          ref={this.itemNameRef}
           id="itemName"
           className="form-control"
           placeholder="add a new todo..."
-          value={this.state.value}
-          onChange={this.handleChange.bind(this)}
+          onChange={this.handleChange}
         />
         <button type="submit" className="btn btn-default">
           Add
